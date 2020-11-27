@@ -1,0 +1,19 @@
+<!-- On va chercher notre variable et notre fonction  -->
+<li  [ngClass]="{ 'list-group-item' : true,
+                  'list-group-item-info' : filmOnAir =='En Blue Ray',
+                  'list-group-item-danger' : filmOnAir == 'En Salle'
+
+}">
+
+  <div class="onAir" *ngIf="filmOnAir == 'En Blue Ray'"><img src="https://www.son-video.com/images/illustration/guides/Blu-ray-Ultra-HD-le-disque-Ultra-Haute-Definition/disque-br-crop.jpg" alt="">
+  </div>
+    <div class="onAir"  *ngIf="filmOnAir =='En Salle'"><img src="https://london.frenchmorning.com/wp-content/uploads/sites/10/2018/09/cine%CC%81ma.jpg" alt="">
+    </div>
+  <h3 [ngStyle]="{color: changeColor()}">Film : {{ filmName }} -- Visibilité : {{ getOnAir () }}</h3> 
+  <img class="affiche" [src]="filmAffiche"> <br>
+  <button class="btn btn-outline-danger" (click)="onWatchFilm()"> Regarder </button> 
+  <!-- <input type="text" class="form-control" [(ngModel)] ="filmName"> -->
+
+  <button class="btn btn-outline-info"
+  (click)="onSwitch()"> Switch </button>
+</li>

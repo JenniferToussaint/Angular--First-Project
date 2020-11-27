@@ -1,0 +1,18 @@
+<ul class="list-group">
+
+  <app-film *ngFor="let tmp of films; let i = index"
+    [filmName]="tmp.name"
+    [filmOnAir]="tmp.onAir"
+    [filmAffiche]="tmp.affiche"
+    [index]="i"> 
+  </app-film>
+  
+  </ul>
+  
+  <button class="btn btn-outline-success"
+  (click) = "onAirAll()">Mettre en Salle</button>
+  
+  <br>
+  <button class="btn btn-outline-warning"
+  (click) = "onBRAll()">Mettre en Blue Ray </button>
+  
