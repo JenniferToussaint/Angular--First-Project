@@ -1,57 +1,102 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmService {
 
-  constructor() { }
-  films = [
-    {
-      name: 'Jurassic Park',
-      onAir: 'En Blue Ray',
-      affiche:'https://upload.wikimedia.org/wikipedia/fr/4/46/Jurassic_Park_Logo.png'
-    },
-    {
-        name: 'Star Wars',
-        onAir: 'En Blue Ray',
-        affiche:'https://images-na.ssl-images-amazon.com/images/I/8104RMlgxWL._AC_SY550_.jpg'
-    },
-     
-    {
-          name: '30 jours Max',
-          onAir: 'En Salle',
-          affiche:'https://fr.web.img4.acsta.net/pictures/20/09/03/13/51/4752567.jpg'
-    },
-  ];
+  constructor(
+    private http: HttpClient
+  ) {
+    this.getFilm();
+   }
+  filmSubject = new Subject<any[]>();
+  private films = [];
 
-/**
- * Set All Movies on Air
- * 
- */
+  private httpOptions = {
+    headers:new HttpHeaders({
+      'Content-type': 'application/json'
+    })
+  }
+
+  emitFilmSubject() {
+    this.filmSubject.next(this.films.slice());
+  }
+
   setOnAir() {
     for (const film of this.films) {
       film.onAir = 'En Salle';
-      
     }
-
+    this.emitFilmSubject();
   }
 
   setOnBR() {
-    for (const iterator of this.films) {
-      iterator.onAir = 'En Blue Ray';
-      
+    for (const film of this.films) {
+      film.onAir = 'Blue Ray';
     }
-
+    this.emitFilmSubject();
   }
 
-  switchOnAir(index: number){
+
+  switchOnAir(index: number) {
     this.films[index].onAir = 'En Salle';
+    this.emitFilmSubject();
+  }
+
+  switchOnBR(index: number) {
+    this.films[index].onAir = 'Blue Ray';
+    this.emitFilmSubject();
+  }
+
+  getFilmById(id: number) {
+    return this.http.get<any>('/api/movies/' + id);
 
   }
 
-  switchOnBR(index: number){
-    this.films[index].onAir = 'En Blue Ray';
-
+  addFilm(film: any) {
+    this.http.post<any>('/api/movies', film, this.httpOptions).subscribe(res => {
+      this.films.push(res);
+      this.emitFilmSubject();
+    });
   }
+
+  getFilm(){
+    this.http.get<any>('/api/movies').subscribe((res) => { //Permet de faire la requête
+      this.films = res;
+      this.emitFilmSubject();
+    });
+  } 
+  modifFilm(film: any) {
+    var index = this.films.findIndex(
+      (filmToModif) => {
+        if (filmToModif._id == film.id) {
+          return true;
+          
+        }
+      }
+    )
+    this.films.splice(index, 1, film);
+    this.emitFilmSubject();
+    return this.http.put<any>('/api/movies/' + film._id, film, this.httpOptions);
+  }
+
+  deleteFilm(id: any) {
+    this.http.delete<any>('/api/movies/' + id).subscribe(res => {
+      var index = this.films.findIndex(
+        (filmToDelete) => {
+          if(filmToDelete._id == id) {
+            return true;
+          }
+        }
+      )
+      this.films.splice(index, 1);
+      this.emitFilmSubject();
+    })
+  }
+
+  
+
+
 }

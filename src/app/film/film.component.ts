@@ -9,8 +9,11 @@ import { FilmService } from '../services/film.service';
 export class FilmComponent implements OnInit { //on doit déclaré a l'interieur de la class
 @Input() filmName: string; // Variable de type script
 @Input() filmOnAir: string;
-@Input() filmAffiche : string ;
+@Input() filmAffiche : string;
 @Input() index: number;
+@Input() synopsis: string;
+@Input() date: string;
+@Input() id: number;
 
   constructor(
       private Film: FilmService
@@ -47,5 +50,10 @@ export class FilmComponent implements OnInit { //on doit déclaré a l'interieur
       console.log('Error: Unknown onAir Type');
     }
   }
+
+  removeFilm(id: any){
+    this.Film.deleteFilm(id);
+  }
+
 
 }

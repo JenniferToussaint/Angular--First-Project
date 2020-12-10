@@ -7,15 +7,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a href="#" class="nav-link">Home</a>
+        <a routerLink="" class="nav-link">Home</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Films</a>
+        <a routerLink="films" class="nav-link" routerLinkActive="active">Films</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Nouveau Film</a>
+        <a routerLink="new" class="nav-link" routerLinkActive="active">Nouveau Film</a>
       </li>
     </ul>
+  </div>
+  <div class="navbar-right">
+    Connexion : {{time}} s
   </div>
 </nav>
 <div class="container">

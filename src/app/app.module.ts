@@ -10,6 +10,7 @@ import { FilmNewComponent } from './film-new/film-new.component';
 import { HomeComponent } from './home/home.component';
 import { FilmListComponent } from './film-list/film-list.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   {
@@ -19,6 +20,10 @@ const appRoutes: Routes = [
   {
     path: 'new',
     component: FilmNewComponent
+  },
+  {
+    path:'modif/:id',
+    component:FilmModifComponent
   },
   {
     path: '',
@@ -38,8 +43,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
-
   ],
   providers: [
     FilmService
@@ -47,4 +52,3 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-                                                       

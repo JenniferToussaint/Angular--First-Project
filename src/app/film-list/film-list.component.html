@@ -1,18 +1,15 @@
 <ul class="list-group">
 
-  <app-film *ngFor="let tmp of films; let i = index"
-    [filmName]="tmp.name"
+  <app-film *ngFor="let tmp of films"
+    [filmName]="tmp.title"
     [filmOnAir]="tmp.onAir"
     [filmAffiche]="tmp.affiche"
-    [index]="i"> 
+    [date]="tmp.date"
+    [synopsis]="tmp.synopsis"
+    [id]="tmp._id">
   </app-film>
   
   </ul>
   
-  <button class="btn btn-outline-success"
-  (click) = "onAirAll()">Mettre en Salle</button>
-  
-  <br>
-  <button class="btn btn-outline-warning"
-  (click) = "onBRAll()">Mettre en Blue Ray </button>
+
   
